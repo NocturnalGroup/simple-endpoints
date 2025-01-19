@@ -1,0 +1,10 @@
+# -- JetBrains --
+.idea/
+
+# -- macOS --
+.DS_Store
+
+# -- .NET --
+[Bb]in/
+[Oo]bj/
+*.DotSettings.user
