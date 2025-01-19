@@ -1,0 +1,24 @@
+name: Publish Packages
+on:
+  release:
+    types: [published]
+jobs:
+  publish:
+    name: Publish to NuGet
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "9.x.x"
+
+      - name: Create Package
+        run: |
+          dotnet pack --configuration Release --output Packages -p:PackageVersion=${{ github.event.release.tag_name }} Source/SimpleEndpoints/SimpleEndpoints.csproj
+
+      - name: Publish Package
+        run: |
+          dotnet nuget push Packages/*.nupkg --skip-duplicate -k ${{ secrets.NUGET_KEY }} -s "https://api.nuget.org/v3/index.json"
