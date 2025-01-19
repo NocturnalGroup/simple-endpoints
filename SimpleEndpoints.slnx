@@ -1,0 +1,8 @@
+﻿<Solution>
+  <Folder Name="/Samples/">
+    <Project Path="Samples\SimpleEndpoints.Walkthrough\SimpleEndpoints.Walkthrough.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/Source/">
+    <Project Path="Source\SimpleEndpoints\SimpleEndpoints.csproj" Type="Classic C#" />
+  </Folder>
+</Solution>
