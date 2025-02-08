@@ -143,11 +143,7 @@ public static class SimpleEndpointT1Extensions
 	)
 		where TEndpoint : ISimpleEndpoint<TParameters>
 	{
-		return builder.MapMethods(
-			pattern,
-			httpMethods,
-			CreateEndpointDelegate<TEndpoint, TParameters>()
-		);
+		return builder.MapMethods(pattern, httpMethods, CreateEndpointDelegate<TEndpoint, TParameters>());
 	}
 
 	/// <summary>
@@ -200,9 +196,7 @@ public static class SimpleEndpointT1Extensions
 	/// <returns>A <see cref="RouteHandlerBuilder"/> that can be used to further customize the endpoint.</returns>
 	/// <remarks>For more information, please see the referenced Map function.</remarks>
 	/// <seealso cref="EndpointRouteBuilderExtensions.MapFallback(IEndpointRouteBuilder, Delegate)"/>
-	public static RouteHandlerBuilder MapFallback<TEndpoint, TParameters>(
-		this IEndpointRouteBuilder builder
-	)
+	public static RouteHandlerBuilder MapFallback<TEndpoint, TParameters>(this IEndpointRouteBuilder builder)
 		where TEndpoint : ISimpleEndpoint<TParameters>
 	{
 		return builder.MapFallback(CreateEndpointDelegate<TEndpoint, TParameters>());

@@ -162,10 +162,7 @@ public static class SimpleEndpointT0Extensions
 	/// <returns>A <see cref="RouteHandlerBuilder"/> that can be used to further customize the endpoint.</returns>
 	/// <remarks>For more information, please see the referenced Map function.</remarks>
 	/// <seealso cref="EndpointRouteBuilderExtensions.Map(IEndpointRouteBuilder, RoutePattern, Delegate)"/>
-	public static IEndpointConventionBuilder Map<TEndpoint>(
-		this IEndpointRouteBuilder builder,
-		RoutePattern pattern
-	)
+	public static IEndpointConventionBuilder Map<TEndpoint>(this IEndpointRouteBuilder builder, RoutePattern pattern)
 		where TEndpoint : ISimpleEndpoint
 	{
 		return builder.Map(pattern, CreateEndpointDelegate<TEndpoint>());
