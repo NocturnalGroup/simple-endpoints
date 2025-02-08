@@ -10,6 +10,8 @@
 
 ### Adding structure to Minimal APIs
 
+About · [Getting Started](tutorial.md) · [License](license.txt) · [Contributing](contributing.md)
+
 ---
 
 SimpleEndpoints is a lightweight abstraction on top of Minimal APIs.
@@ -17,17 +19,15 @@ Allowing you to create endpoints with ease.
 
 ## Installing
 
-You can install the package from [NuGet](https://www.nuget.org/packages/NocturnalGroup.SimpleEndpoints):
+You can install SimpleEndpoints with [NuGet](https://www.nuget.org/packages/NocturnalGroup.SimpleEndpoints):
 
 ```shell
 dotnet add package NocturnalGroup.SimpleEndpoints
 ```
 
-## Usage
+## Quickstart
 
-_A complete, but short, walkthrough of SimpleEndpoints can be found [here](Samples/SimpleEndpoints.Walkthrough/Program.cs)._
-
-### Quickstart
+For a detailed walkthrough of SimpleEndpoints, check out our [tutorial](tutorial.md).
 
 ```csharp
 var builder = WebApplication.CreateBuilder(args);
@@ -56,4 +56,8 @@ public readonly struct GreetEndpoint : ISimpleEndpoint<GreetParameters>
 
 ## Versioning
 
-SimpleEndpoints follows the [SemVer](https://semver.org/) versioning scheme.
+We use [Semantic Versioning](https://semver.org/) to clearly communicate changes:
+
+- Major version changes indicate breaking updates
+- Minor version changes add features in a backward-compatible way
+- Patch version changes include backward-compatible bug fixes

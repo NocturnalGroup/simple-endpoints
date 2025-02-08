@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<!-- Project -->
@@ -17,16 +17,16 @@
 		<Description>Adding structure to Minimal APIs</Description>
 		<PackageProjectUrl>https://github.com/NocturnalGroup/simple-endpoints</PackageProjectUrl>
 		<PackageIcon>Logo.png</PackageIcon>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
 		<RepositoryUrl>https://github.com/NocturnalGroup/simple-endpoints</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>http;endpoint;controller;minimal;api;</PackageTags>
-		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+		<PackageLicenseFile>license.txt</PackageLicenseFile>
 	</PropertyGroup>
 
 	<ItemGroup Label="Package assets">
-		<None Include="..\..\README.md" Pack="true" PackagePath="" Visible="false"/>
-		<None Include="..\..\LICENSE.txt" Pack="true" PackagePath="" Visible="false"/>
+		<None Include="..\..\readme.md" Pack="true" PackagePath="" Visible="false"/>
+		<None Include="..\..\license.txt" Pack="true" PackagePath="" Visible="false"/>
 		<None Include="..\..\Assets\Logo.png" Pack="true" PackagePath="" Visible="false" />
 	</ItemGroup>
 
