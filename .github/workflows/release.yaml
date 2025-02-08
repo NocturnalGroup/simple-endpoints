@@ -1,10 +1,12 @@
-name: Publish Packages
+name: Publish Project
 on:
   release:
-    types: [published]
+    types: [released]
+permissions:
+  contents: read
 jobs:
-  publish:
-    name: Publish to NuGet
+  csharp-publish:
+    name: Publish C# to NuGet
     runs-on: ubuntu-latest
     steps:
       - name: Clone repository
