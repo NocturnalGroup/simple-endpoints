@@ -1,14 +1,10 @@
-namespace NocturnalGroup.SimpleEndpoints.Walkthrough;
+namespace NocturnalGroup.SimpleEndpoints.Tests.Debug;
 
 /// <summary>
 /// A user of the application.
 /// </summary>
 public sealed record User(int Id, string Username);
 
-/// <summary>
-/// This is an example of a service you'd have in your app.
-/// It's really not important. It's just here so the project compiles.
-/// </summary>
 public class UserService
 {
 	private readonly List<User> _users = [new(0, "John Doe"), new(1, "Sam Smith")];

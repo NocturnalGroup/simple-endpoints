@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<!-- Project -->
+		<OutputType>Exe</OutputType>
+		<LangVersion>latest</LangVersion>
+		<TargetFramework>net9.0</TargetFramework>
+		<RootNamespace>NocturnalGroup.SimpleEndpoints.Tests.Debug</RootNamespace>
+
+		<!-- Features -->
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+	<ProjectReference Include="..\SimpleEndpoints\SimpleEndpoints.csproj" />
+	</ItemGroup>
+
+</Project>
