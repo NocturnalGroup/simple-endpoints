@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace NocturnalGroup.SimpleEndpoints.Tests.Unit;
 
-public sealed class RouteOnlyEndpoint : TestEndpointBase
+internal sealed class RouteOnlyEndpoint : TestEndpointBase
 {
 	public override void Configure(IEndpointConfig config)
 	{
@@ -11,7 +11,7 @@ public sealed class RouteOnlyEndpoint : TestEndpointBase
 	}
 }
 
-public sealed class RouteWithMethodsEndpoint : TestEndpointBase
+internal sealed class RouteWithMethodsEndpoint : TestEndpointBase
 {
 	public override void Configure(IEndpointConfig config)
 	{
@@ -20,7 +20,7 @@ public sealed class RouteWithMethodsEndpoint : TestEndpointBase
 	}
 }
 
-public sealed class GlobalFallbackEndpoint : TestEndpointBase
+internal sealed class GlobalFallbackEndpoint : TestEndpointBase
 {
 	public override void Configure(IEndpointConfig config)
 	{
@@ -28,7 +28,7 @@ public sealed class GlobalFallbackEndpoint : TestEndpointBase
 	}
 }
 
-public sealed class PatternFallbackEndpoint : TestEndpointBase
+internal sealed class PatternFallbackEndpoint : TestEndpointBase
 {
 	public override void Configure(IEndpointConfig config)
 	{
@@ -37,7 +37,7 @@ public sealed class PatternFallbackEndpoint : TestEndpointBase
 	}
 }
 
-public abstract class TestEndpointBase : ISimpleEndpoint<NoParameters>
+internal abstract class TestEndpointBase : ISimpleEndpoint<NoParameters>
 {
 	public abstract void Configure(IEndpointConfig config);
 
