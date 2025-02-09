@@ -27,11 +27,11 @@
 	<ItemGroup Label="Package assets">
 		<None Include="..\..\readme.md" Pack="true" PackagePath="" Visible="false"/>
 		<None Include="..\..\license.txt" Pack="true" PackagePath="" Visible="false"/>
-		<None Include="..\..\Assets\Logo.png" Pack="true" PackagePath="" Visible="false" />
+		<None Include="..\..\Assets\Logo.png" Pack="true" PackagePath="" Visible="false"/>
 	</ItemGroup>
 
 	<ItemGroup>
-		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+		<FrameworkReference Include="Microsoft.AspNetCore.App"/>
 	</ItemGroup>
 
 </Project>
