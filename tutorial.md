@@ -26,17 +26,41 @@ So bring your own favorite libraries for things like validation!
 
 ## Endpoint Creation
 
-The easiest way to create an endpoint is to create a class/struct and implement the `ISimpleEndpoint` interface.
-A new instance of your endpoint type will be created for each request through the `IServiceProvider`.
-This means you can inject anything you need through the constructor.
+To create an endpoint, you need to create a type that implements the `ISimpleEndpoint` interface.
+The `ISimpleEndpoint` interface takes one generic parameter.
+You can use either `NoParameters`, `BaseParameters`, or your own parameters type (more on that later).
 
-The `HandleRequestAsync` method gets invoked when a request comes in.
-It has a single parameter, which provides access to the `HttpContext`.
+When your application starts up, an instance of your endpoint will be created.
+This instance of your endpoint is used to call the `Configure` method.
+This method defines how your endpoint should be mapped in the router.
+
+When a request comes in that matches your configuration, an instance of your endpoint will be created.
+This instance of your endpoint is used to call the `HandleRequestAsync` method.
 All you need to do, is return an `IResult` which represents the outcome of the request.
 An easy way to do this is to use the methods on the `Microsoft.AspNetCore.Http.Results` type.
 
 ```csharp
-public readonly struct GetUsersEndpoint : ISimpleEndpoint
+public sealed class HelloWorldEndpoint : ISimpleEndpoint<NoParameters>
+{
+  public void Configure(IEndpointConfig config)
+  {
+    config.MapRoute("/", HttpMethod.Get);
+  }
+
+  public Task<IResult> HandleRequestAsync(NoParameters _)
+  {
+    return Task.FromResult(Results.Ok("Hello World!"));
+  }
+}
+```
+
+### Dependency Injection
+
+All instances of your endpoint will be created through the WebApplication's `IServiceProvider`.
+So you can inject anything you need into your endpoint.
+
+```csharp
+public readonly struct GetUsersEndpoint : ISimpleEndpoint<BaseParameters>
 {
   private readonly UserService _userService;
 
@@ -45,18 +69,16 @@ public readonly struct GetUsersEndpoint : ISimpleEndpoint
     _userService = userService;
   }
 
-  public Task<IResult> HandleRequestAsync(BaseParameters _)
-  {
-    var users = _userService.GetUsers();
-    return Task.FromResult(Results.Ok(users));
-  }
+  // ...
 }
 ```
 
-However, most endpoints will require access to request level information.
-This can be achieved by providing a custom parameters type.
+### Custom Parameters
+
+Most endpoints will require access to request level information.
+This can be achieved by creating a custom parameters type.
 Under the hood, this type is registered with the `[AsParameters]` attribute.
-This means you can easily get access to any request level information.
+Allowing you to get easy access to any request level information.
 
 ```csharp
 public struct GetUserParameters
@@ -83,21 +105,14 @@ public struct GetUserParameters
 }
 ```
 
-To use a custom parameters type, you need to implement the `ISimpleEndpoint<TParameters>` interface.
-You'll then have your custom parameters in the `HandleRequestAsync` method.
-
-_While it's possible to use the `[FromServices]` attribute, we suggest using the constructor.
-There's no technical difference, it just keeps things consistent throughout your codebase._
+Using a custom parameters type works just like `NoParameters` and `BaseParameters`.
+Place your custom type as the generic parameter and you're good to go.
+You'll then have your parameters in the `HandleRequestAsync` method.
 
 ```csharp
 public readonly struct GetUserEndpoint : ISimpleEndpoint<GetUserParameters>
 {
-  private readonly UserService _userService;
-
-  public GetUserEndpoint(UserService userService)
-  {
-    _userService = userService;
-  }
+  // ...
 
   public Task<IResult> HandleRequestAsync(GetUserParameters parameters)
   {
@@ -108,17 +123,80 @@ public readonly struct GetUserEndpoint : ISimpleEndpoint<GetUserParameters>
 }
 ```
 
+_While it's possible to use the `[FromServices]` attribute, we suggest using the constructor.
+There's no technical difference, it just keeps things consistent throughout your codebase._
+
+### Endpoint Customizing
+
+Most routes require additional configuration like rate limiting or authorization.
+This can be done through the `Customize(Action)` method.
+
+```csharp
+public sealed class HelloWorldEndpoint : ISimpleEndpoint<NoParameters>
+{
+  public void Configure(IEndpointConfig config)
+  {
+    config.MapRoute("/", HttpMethod.Get);
+    config.Customize(c =>
+    {
+      c.AllowAnonymous();
+      c.RequireRateLimiting("example");
+    });
+  }
+
+  public Task<IResult> HandleRequestAsync(NoParameters _)
+  {
+    return Task.FromResult(Results.Ok("Hello World!"));
+  }
+}
+```
+
+
+### Route Only Endpoints
+
+For endpoints that need to handle all methods, you can use the `MapRoute(string)` overload.
+Your endpoint will then handle any request for the specified pattern regardless of HTTP method.
+
+```csharp
+public sealed class RouteOnlyEndpoint : ISimpleEndpoint<NoParameters>
+{
+  public void Configure(IEndpointConfig config)
+  {
+    config.MapRoute("/");
+  }
+
+  // ...
+}
+```
+
+### Fallback Endpoints
+
+To create a fallback endpoint, the `MapFallback()` and `MapFallback(string)` methods are provided.
+Internally we call these "Global Fallback" and "Pattern Fallback" respectively.
+
+- A global fallback matches requests for non-file-names with the lowest possible priority.
+- A pattern fallback matches for the specified pattern with the lowest possible priority.
+
+```csharp
+public sealed class HelloWorldEndpoint : ISimpleEndpoint<NoParameters>
+{
+  public void Configure(IEndpointConfig config)
+  {
+    config.MapFallback(); // "Global Fallback"
+    config.MapFallback("/fallback"); // "Pattern Fallback"
+  }
+
+  // ...
+}
+```
+
 ## Endpoint Mapping
 
-Mapping your endpoints is done just like Minimal APIs.
-You need to manually specify which endpoint handle each route.
-This allows a clear view into what is registered and where.
-To achieve this, there are overrides for all the Map methods.
-If an override is missing, please let us know!
+To map your endpoints, use the `MapEndpoint` extension on your `WebApplication`.
+This will then automatically wire everything up for you.
 
 ```csharp
 var app = builder.Build();
-app.MapGet<GetUsersEndpoint>("/users"); // Base Parameters
-app.MapGet<GetUserEndpoint, GetUserParameters>("/users/{UserId:int}"); // Custom Parameters
+app.MapEndpoint<GetUserEndpoint, GetUserParameters>();
 app.Run();
 ```

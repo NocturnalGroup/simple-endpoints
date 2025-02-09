@@ -32,7 +32,7 @@ For a detailed walkthrough of SimpleEndpoints, check out our [tutorial](tutorial
 ```csharp
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
-app.MapGet<GreetEndpoint, GreetParameters>("/");
+app.MapEndpoint<GreetEndpoint, GreetParameters>();
 app.Run();
 
 public readonly struct GreetParameters
@@ -41,10 +41,11 @@ public readonly struct GreetParameters
   public string Name { get; init; }
 }
 
-public readonly struct GreetEndpoint : ISimpleEndpoint<GreetParameters>
+public sealed class GreetEndpoint : ISimpleEndpoint<GreetParameters>
 {
-  public GreetEndpoint()
+  public void Configure(IEndpointConfig config)
   {
+    config.MapRoute("/", HttpMethod.Get);
   }
 
   public Task<IResult> HandleRequestAsync(GreetParameters parameters)
