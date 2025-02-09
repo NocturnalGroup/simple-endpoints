@@ -19,9 +19,9 @@ public readonly struct BaseParameters
 	[FromServices]
 	public HttpContext Context { get; init; }
 
-	/// <inheritdoc cref="HttpContext"/>
+	/// <inheritdoc cref="HttpRequest"/>
 	public HttpRequest Request => Context.Request;
 
-	/// <inheritdoc cref="HttpContext"/>
+	/// <inheritdoc cref="HttpResponse"/>
 	public HttpResponse Response => Context.Response;
 }
