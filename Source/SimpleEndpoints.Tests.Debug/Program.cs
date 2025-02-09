@@ -6,25 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<UserService>();
 
 var app = builder.Build();
-app.MapGet<GetUsersEndpoint>("/users");
 app.MapGet<GetUserEndpoint, GetUserParameters>("/users/{UserId:int}");
 app.Run();
-
-public readonly struct GetUsersEndpoint : ISimpleEndpoint
-{
-	private readonly UserService _userService;
-
-	public GetUsersEndpoint(UserService userService)
-	{
-		_userService = userService;
-	}
-
-	public Task<IResult> HandleRequestAsync(BaseParameters _)
-	{
-		var users = _userService.GetUsers();
-		return Task.FromResult(Results.Ok(users));
-	}
-}
 
 public struct GetUserParameters
 {
