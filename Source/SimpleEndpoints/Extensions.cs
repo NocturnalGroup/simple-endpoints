@@ -19,9 +19,12 @@ public static class SimpleEndpointT1Extensions
 	public static void MapEndpoint<TEndpoint, TParameters>(this IEndpointRouteBuilder builder)
 		where TEndpoint : ISimpleEndpoint<TParameters>
 	{
+		// Generate a DI scope to enable scoped service resolving.
+		var scope = builder.ServiceProvider.CreateScope();
+
 		// Generate the endpoint configuration.
 		var endpointConfig = new EndpointConfig();
-		var endpointInstance = ActivatorUtilities.CreateInstance<TEndpoint>(builder.ServiceProvider);
+		var endpointInstance = ActivatorUtilities.CreateInstance<TEndpoint>(scope.ServiceProvider);
 		endpointInstance.Configure(endpointConfig);
 
 		// Generate the handler delegate.
