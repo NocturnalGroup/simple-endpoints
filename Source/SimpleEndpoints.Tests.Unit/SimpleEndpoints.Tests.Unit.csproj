@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<!-- Project -->
+		<IsPackable>false</IsPackable>
+		<LangVersion>latest</LangVersion>
+		<TargetFramework>net9.0</TargetFramework>
+		<RootNamespace>NocturnalGroup.SimpleEndpoints.Tests.Unit</RootNamespace>
+
+		<!-- Features -->
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Using Include="Xunit"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.1"/>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0"/>
+		<PackageReference Include="Shouldly" Version="4.3.0"/>
+		<PackageReference Include="xunit.v3" Version="1.1.0"/>
+		<PackageReference Include="xunit.runner.visualstudio" Version="3.0.2"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\SimpleEndpoints\SimpleEndpoints.csproj"/>
+	</ItemGroup>
+
+</Project>
