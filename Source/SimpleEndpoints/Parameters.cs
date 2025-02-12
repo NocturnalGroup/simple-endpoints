@@ -16,7 +16,6 @@ public readonly struct NoParameters { }
 public readonly struct BaseParameters
 {
 	/// <inheritdoc cref="HttpContext"/>
-	[FromServices]
 	public HttpContext Context { get; init; }
 
 	/// <inheritdoc cref="HttpRequest"/>

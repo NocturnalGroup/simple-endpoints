@@ -37,11 +37,16 @@ internal sealed class PatternFallbackEndpoint : TestEndpointBase
 	}
 }
 
-internal abstract class TestEndpointBase : ISimpleEndpoint<NoParameters>
+internal abstract class TestEndpointBase : ISimpleEndpoint<NoParameters>, ISimpleEndpoint<BaseParameters>
 {
 	public abstract void Configure(IEndpointConfig config);
 
-	public Task<IResult> HandleRequestAsync(NoParameters parameters)
+	public Task<IResult> HandleRequestAsync(NoParameters _)
+	{
+		return Task.FromResult(Results.NoContent());
+	}
+
+	public Task<IResult> HandleRequestAsync(BaseParameters _)
 	{
 		return Task.FromResult(Results.NoContent());
 	}

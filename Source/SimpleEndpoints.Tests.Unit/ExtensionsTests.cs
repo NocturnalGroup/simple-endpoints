@@ -29,7 +29,7 @@ public class ExtensionsTests
 	public async Task MapEndpoint_Should_MapSimpleEndpoint_RouteWithMethods()
 	{
 		// Arrange
-		await using var server = new TestServer(c => c.MapEndpoint<RouteWithMethodsEndpoint, NoParameters>());
+		await using var server = new TestServer(c => c.MapEndpoint<RouteWithMethodsEndpoint, BaseParameters>());
 		var client = await server.StartServerAsync();
 
 		// Act
