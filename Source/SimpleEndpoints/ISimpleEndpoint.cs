@@ -26,5 +26,5 @@ public interface ISimpleEndpoint<in TParameters>
 	/// <summary>
 	/// Handles a HTTP request.
 	/// </summary>
-	Task<IResult> HandleRequestAsync(TParameters parameters);
+	Task<IResult> HandleRequestAsync(TParameters parameters, CancellationToken ct);
 }

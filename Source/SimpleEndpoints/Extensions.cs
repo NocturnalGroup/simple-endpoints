@@ -28,10 +28,14 @@ public static class SimpleEndpointT1Extensions
 		endpointInstance.Configure(endpointConfig);
 
 		// Generate the handler delegate.
-		var endpointDelegate = async (IServiceProvider services, [AsParameters] TParameters request) =>
+		var endpointDelegate = async (
+			IServiceProvider services,
+			[AsParameters] TParameters request,
+			CancellationToken ct
+		) =>
 		{
 			var endpoint = ActivatorUtilities.CreateInstance<TEndpoint>(services);
-			return await endpoint.HandleRequestAsync(request).ConfigureAwait(false);
+			return await endpoint.HandleRequestAsync(request, ct).ConfigureAwait(false);
 		};
 
 		// Routes Only.

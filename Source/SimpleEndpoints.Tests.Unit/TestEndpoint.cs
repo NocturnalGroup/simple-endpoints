@@ -41,12 +41,12 @@ internal abstract class TestEndpointBase : ISimpleEndpoint<NoParameters>, ISimpl
 {
 	public abstract void Configure(IEndpointConfig config);
 
-	public Task<IResult> HandleRequestAsync(NoParameters _)
+	public Task<IResult> HandleRequestAsync(NoParameters _, CancellationToken __)
 	{
 		return Task.FromResult(Results.NoContent());
 	}
 
-	public Task<IResult> HandleRequestAsync(BaseParameters _)
+	public Task<IResult> HandleRequestAsync(BaseParameters _, CancellationToken __)
 	{
 		return Task.FromResult(Results.NoContent());
 	}
