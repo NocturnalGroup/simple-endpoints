@@ -20,7 +20,7 @@ public static class SimpleEndpointT1Extensions
 		where TEndpoint : ISimpleEndpoint<TParameters>
 	{
 		// Generate a DI scope to enable scoped service resolving.
-		var scope = builder.ServiceProvider.CreateScope();
+		using var scope = builder.ServiceProvider.CreateScope();
 
 		// Generate the endpoint configuration.
 		var endpointConfig = new EndpointConfig();
